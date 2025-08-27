@@ -98,10 +98,10 @@ with col3:
 st.markdown('<div style="margin-top: 50px;"></div>', unsafe_allow_html=True)
 col4, col5, col6 = st.columns(3)
 
-size_counts = country_df['Size Category'].value_counts().reindex(['S', 'M', 'L', 'G', 'XL', 'Other'], fill_value=0)
+size_counts = country_df['Size Category'].value_counts().reindex(['S', 'M', 'L', 'G', 'XL'], fill_value=0)
 fig_size = px.bar(x=size_counts.index, y=size_counts.values, labels={'x': 'Tamanho', 'y': 'Quantidade'})
 fig_size.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336'],
     marker_line_color='black',
     marker_line_width=1.5
 )
@@ -123,7 +123,7 @@ with col4:
 top_jobs = country_df['Cargo'].value_counts().head(5)
 fig_jobs = px.bar(x=top_jobs.index, y=top_jobs.values, labels={'x': 'Cargo', 'y': 'Quantidade'})
 fig_jobs.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336'],
     marker_line_color='black',
     marker_line_width=1
 )
@@ -145,7 +145,7 @@ with col5:
 top_industries = country_df['Setor da empresa'].value_counts().head(5)
 fig_industries = px.bar(x=top_industries.index, y=top_industries.values, labels={'x': 'Setor', 'y': 'Quantidade'})
 fig_industries.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336'],
     marker_line_color='black',
     marker_line_width=1
 )
@@ -170,7 +170,22 @@ st.markdown('<h2 style="font-size: 20px;">Dados Gerais</h2>', unsafe_allow_html=
 country_counts = df.groupby('País da empresa')['Nome da empresa'].nunique().sort_values(ascending=False).head(15)
 fig_countries = px.bar(x=country_counts.index, y=country_counts.values, labels={'x': 'País', 'y': 'Quantidade de Empresas'})
 fig_countries.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#FFCE00', # Alemanha (amarelo)
+ '#CF142B', # Reino Unido (vermelho)
+ '#0055A4', # França (azul)
+ '#AA151B', # Espanha (vermelho)
+ '#006600', # Portugal (verde)
+ '#DC143C', # Polônia (vermelho)
+ '#FFCD00', # Bélgica (amarelo)
+ '#169B62', # Irlanda (verde)
+ '#FFB81C',
+'#ff0000',
+ '#3C3B6E', # Estados Unidos (azul)
+ '#009C3B', # Brasil (verde)
+ '#0072CE', # Estônia (azul)
+ '#006847', # México (verde)
+ '#D32011'] # Afeganistão (vermelho)
+,
     marker_line_color='black',
     marker_line_width=1
 )
@@ -192,7 +207,7 @@ col7, col8 = st.columns(2)
 global_top_jobs = df['Cargo'].value_counts().head(10)
 fig_global_jobs = px.bar(x=global_top_jobs.index, y=global_top_jobs.values, labels={'x': 'Cargo', 'y': 'Quantidade'})
 fig_global_jobs.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336','#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336'],
     marker_line_color='black',
     marker_line_width=1
 )
@@ -214,7 +229,7 @@ with col7:
 global_top_industries = df['Setor da empresa'].value_counts().head(10)
 fig_global_industries = px.bar(x=global_top_industries.index, y=global_top_industries.values, labels={'x': 'Setor', 'y': 'Quantidade'})
 fig_global_industries.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336','#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336'],
     marker_line_color='black',
     marker_line_width=1
 )
@@ -233,10 +248,13 @@ fig_global_industries.update_layout(
 with col8:
     st.plotly_chart(fig_global_industries, use_container_width=True)
     
-global_size_counts = df['Size Category'].value_counts().reindex(['S', 'M', 'L', 'G', 'XL', 'Other'], fill_value=0)
+st.markdown('<h3 style="font-size: 18px;">Obs:</h3>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #747474">Tamanho das empresas: S = 1-10, M = 11-50, L = 51-200, G = 201-1000, XL = 1001+</li>', unsafe_allow_html=True)
+    
+global_size_counts = df['Size Category'].value_counts().reindex(['S', 'M', 'L', 'G', 'XL'], fill_value=0)
 fig_global_size = px.bar(x=global_size_counts.index, y=global_size_counts.values, labels={'x': 'Tamanho', 'y': 'Quantidade'})
 fig_global_size.update_traces(
-    marker_color="#2196F3",
+    marker_color=['#4CAF50','#8BC34A','#2196F3','#9C27B0','#FF9800','#F44336'],
     marker_line_color='black',
     marker_line_width=1.5
 )
@@ -254,7 +272,11 @@ fig_global_size.update_layout(
 )
 st.plotly_chart(fig_global_size, use_container_width=True)
 
+
 st.markdown('<h3 style="font-size: 18px;">Insights💡</h3>', unsafe_allow_html=True)
-st.markdown('<li style="font-size: 20px; color: #D6D6D6">O País com mais empresas é a Alemanha, focar nela é uma boa ideia pois o mercado é bom</li>', unsafe_allow_html=True)
-st.markdown('<li style="font-size: 20px; color: #D6D6D6">O Cargo e a Área com mais trabalhadores é o <span style="font-weight: 700; color:#2196F3">Head of IT</span> e <span style="font-weight: 700; color:#2196F3">Information Technology & Services</span> respectivamente</li>', unsafe_allow_html=True)
-st.markdown('<li style="font-size: 20px; color: #D6D6D6">Empresas de tamanho L (51 - 200) são as que mais aparecem, das uma atenção a elas é uma boa ideia</li>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #D6D6D6"><span style="font-weight: 700; color:#2196F3"">Investir na alemanha</span></li>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #D6D6D6;list-style: square; margin-left:50px;"><span style="font-weight: 700; color:#2196F3"">Setor Dominante:</span> "Information Technology & Services" é o setor mais frequente na Alemanha, alinhado com a reputação do país como líder em inovação tecnológica.</li>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #D6D6D6;list-style: square; margin-left:50px;"><span style="font-weight: 700; color:#2196F3"">Oportunidades de Crescimento:</span> Empresas como "Thinkproject" (501-1000 funcionários) e "Evosoft" (1001-5000) indicam potencial para investimentos em empresas de médio a grande porte que podem expandir ainda mais.</li>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #D6D6D6;list-style: square; margin-left:50px;"><span style="font-weight: 700; color:#2196F3"">Riscos:</span> A tabela não mostra dados financeiros diretos (ex.: receita, lucro), então é preciso investigar a saúde financeira dessas empresas. Além disso, a dependência de TI pode ser vulnerável a mudanças tecnológicas rápidas.</li>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #D6D6D6">O cargo mais comum é <span style="font-weight: 700; color:#2196F3">Head of IT</span>, refletindo liderança técnica, enquanto <span style="font-weight: 700; color:#2196F3">Information Technology & Services</span> lidera como setor. Isso sugere investir em parcerias ou treinamentos para líderes de TI, aproveitando o crescimento do setor tecnológico. e  respectivamente</li>', unsafe_allow_html=True)
+st.markdown('<li style="font-size: 20px; color: #D6D6D6">Empresas L (51-200 funcionários), como <span style="font-weight: 700; color:#2196F3"">PIKON Germany</span> e <span style="font-weight: 700; color:#2196F3"">Materna Virtual Solution GmbH</span>, são as mais frequentes. Focar nelas é estratégico, dado seu potencial de crescimento em TI e flexibilidade operacional.</li>', unsafe_allow_html=True)
